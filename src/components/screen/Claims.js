@@ -19,6 +19,8 @@ function Claims(props) {
     const [data, setData] = useState(null)
     const [selectedDev, onSelectDev] =useState("")
 
+    const [claimId, setClaimId] =useState("")
+
     const {id:policyId} =props.match.params
 
 
@@ -28,6 +30,13 @@ function Claims(props) {
         if (deviceType.toLowerCase().includes("router")) return routerHuawei
         if (deviceType.toLowerCase().includes("odu")) return odu
         return  mifiHuawei
+    }
+
+    const handleClickSearch=()=>{
+        if (!claimId) return
+        const data=getData().find(item=>item.policyId===claimId)
+        setData(data)
+
     }
 
     useEffect(()=>{
@@ -47,6 +56,9 @@ function Claims(props) {
                 selectedDev={selectedDev}
                 onSelectChange={onSelectDev}
                 endDate={endDate}
+                claimId={claimId}
+                onClickSearch={handleClickSearch}
+                setClaimId={setClaimId}
                 setEndDate={setEndDate}/>
             {data &&  <div className={classes.container}>
                 <div className={classes.content}>

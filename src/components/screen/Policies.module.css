@@ -1,2 +1,7 @@
-
+.paginateContainer{
+    display: flex;
+    justify-content: flex-end;
+    align-content: flex-start;
+    padding-left: 30px;
+}
 

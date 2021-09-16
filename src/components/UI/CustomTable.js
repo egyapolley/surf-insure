@@ -43,7 +43,7 @@ function CustomTable({data,onSort,sortColumn}) {
         const {path, orderBy} = sortColumn
         if (column ===path){
             if (orderBy === 'asc'){
-                return <i class="fas fa-sort-up sort"/>
+                return <i className="fas fa-sort-up sort"/>
             }else {
                 return <i className="fas fa-sort-down sort"/>
             }

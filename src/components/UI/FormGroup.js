@@ -5,15 +5,21 @@ import classes from './FormGroup.module.css'
 
 
 
-function FormGroup({startDate, setStartDate, endDate, setEndDate, selectOptions, onSelectChange,selectedDev}) {
-    console.log(selectOptions)
+function FormGroup({startDate, setStartDate,
+                       endDate, setEndDate,
+                       onClickSearch,
+                       selectOptions, onSelectChange,selectedDev,claimId,setClaimId}) {
+
 
 
     return (
         <div>
             <div className={classes.formGroup}>
-                <div className="">
-                    <input type="text" placeholder="Search with claim ID" id="search"/>
+                <div>
+                    <input type="text"
+                           placeholder="Search with claim ID"
+                           value={claimId}
+                           onChange={event => setClaimId(event.target.value)}/>
                 </div>
                 <div>
                     <select value={selectedDev}  onChange={event =>onSelectChange(event.target.value) }>
@@ -32,7 +38,7 @@ function FormGroup({startDate, setStartDate, endDate, setEndDate, selectOptions,
                 </div>
             </div>
             <div>
-                <button className={classes.searchBtn}><i className="fas fa-sign-in-alt"/>Search</button>
+                <button className={classes.searchBtn} onClick={onClickSearch}><i className="fas fa-sign-in-alt"/>Search</button>
             </div>
         </div>
     );
