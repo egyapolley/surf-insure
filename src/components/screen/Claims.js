@@ -65,7 +65,8 @@ function Claims(props) {
                     </div>
                 </div>
                 <div>
-                    <button>Submit Claim</button>
+                    {data.status ==="Active" && <button>Submit Claim</button> }
+
                 </div>
             </div>}
 
