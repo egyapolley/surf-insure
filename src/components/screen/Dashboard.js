@@ -10,8 +10,16 @@ import Card from "../UI/Card";
 
 function Dashboard(props) {
 
-    const [startDate, setStartDate] =useState(new Date())
+    const {deviceTypes} =props
+
+    const today =new Date()
+    const lastMonth =new Date().setMonth(today.getMonth()-2)
+
+    const [startDate, setStartDate] =useState(today)
+    const [endDate, setEndDate] =useState(lastMonth)
+
     const [data, setData] =useState([])
+    const [selectedDev, onSelectDev] =useState("")
 
 
     useEffect(()=>{
@@ -19,7 +27,14 @@ function Dashboard(props) {
     },[data])
     return (
         <div>
-            <FormGroup setStartDate={setStartDate} startDate={startDate}/>
+            <FormGroup
+                setStartDate={setStartDate}
+                startDate={startDate}
+                endDate={endDate}
+                selectOptions={deviceTypes}
+                selectedDev={selectedDev}
+                onSelectChange={onSelectDev}
+                setEndDate={setEndDate}/>
             <div className={classes.content}>
                 <div className={classes.card}>
                     <Card name="policy_sold"  value="2010"  label="POLICY SOLD"/>

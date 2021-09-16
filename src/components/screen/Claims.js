@@ -7,12 +7,17 @@ import odu from '../../assets/odu.png'
 import {getData} from "../../data";
 
 
-
 function Claims(props) {
 
+    const {deviceTypes} =props
 
-    const [startDate, setStartDate] = useState(new Date())
+    const today =new Date()
+    const lastMonth =new Date().setMonth(today.getMonth()-2)
+
+    const [startDate, setStartDate] =useState(today)
+    const [endDate, setEndDate] =useState(lastMonth)
     const [data, setData] = useState(null)
+    const [selectedDev, onSelectDev] =useState("")
 
     const {id:policyId} =props.match.params
 
@@ -35,7 +40,14 @@ function Claims(props) {
 
     return (
         <div>
-            <FormGroup setStartDate={setStartDate} startDate={startDate}/>
+            <FormGroup
+                setStartDate={setStartDate}
+                startDate={startDate}
+                selectOptions={deviceTypes}
+                selectedDev={selectedDev}
+                onSelectChange={onSelectDev}
+                endDate={endDate}
+                setEndDate={setEndDate}/>
             {data &&  <div className={classes.container}>
                 <div className={classes.content}>
                     <div className={classes.imgContainer}>

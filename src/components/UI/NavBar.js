@@ -24,6 +24,9 @@ function NavBar(props) {
                 <li>
                     <NavLink to="/reports" activeStyle={activeStyle}>Reports</NavLink>
                 </li>
+                <li>
+                    <NavLink to="/settings" activeStyle={activeStyle}>Settings</NavLink>
+                </li>
             </ul>
         </nav>
     );

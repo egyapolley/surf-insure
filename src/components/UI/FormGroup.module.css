@@ -38,6 +38,11 @@
     text-align: center;
 }
 
+.formGroup select:focus {
+    background: #abbfbf;
+}
+
+
 .date {
     margin: 0 30px;
 }
