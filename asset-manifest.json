@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/surf-insure/static/css/main.e6794b10.chunk.css",
-    "main.js": "/surf-insure/static/js/main.c6dd1f16.chunk.js",
-    "main.js.map": "/surf-insure/static/js/main.c6dd1f16.chunk.js.map",
+    "main.js": "/surf-insure/static/js/main.42f417ae.chunk.js",
+    "main.js.map": "/surf-insure/static/js/main.42f417ae.chunk.js.map",
     "runtime-main.js": "/surf-insure/static/js/runtime-main.ccac1489.js",
     "runtime-main.js.map": "/surf-insure/static/js/runtime-main.ccac1489.js.map",
     "static/css/2.26facccd.chunk.css": "/surf-insure/static/css/2.26facccd.chunk.css",
@@ -22,6 +22,6 @@
     "static/css/2.26facccd.chunk.css",
     "static/js/2.9299e76a.chunk.js",
     "static/css/main.e6794b10.chunk.css",
-    "static/js/main.c6dd1f16.chunk.js"
+    "static/js/main.42f417ae.chunk.js"
   ]
 }
