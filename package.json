@@ -20,7 +20,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -40,10 +42,12 @@
       "last 1 safari version"
     ]
   },
+  "homepage": "http://egyapolley.github.io/surf-insure",
   "devDependencies": {
     "@types/lodash": "^4.14.173",
     "@types/react-datepicker": "^4.1.7",
     "@types/react-router-dom": "^5.1.9",
-    "@types/react-select": "^4.0.17"
+    "@types/react-select": "^4.0.17",
+    "gh-pages": "^3.2.3"
   }
 }
