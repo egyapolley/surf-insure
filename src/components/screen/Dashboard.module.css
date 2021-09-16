@@ -1,0 +1,23 @@
+.content {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    flex-wrap: wrap;
+}
+.card {
+    text-align: center;
+}
+.card a {
+    color: #0245A3;
+
+}
+.card a:hover{
+    text-decoration: underline;
+}
+
+.chart{
+
+}
+
+
+

@@ -1,0 +1,34 @@
+.content {
+    margin-top: 40px;
+}
+
+.content table {
+    padding: 20px;
+    width: 80%;
+    margin: 0 auto;
+    color: #4f4d4d;
+    border-collapse: collapse;
+}
+
+.content th, .content td {
+    padding: 4px 5px;
+    text-align: left;
+}
+
+
+.content thead tr {
+    border-bottom: 2px solid #4f4d4d;
+}
+
+.content tr:last-of-type {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #4f4d4d;
+
+}
+.content tr:nth-child(even){
+    background: #f3efef;
+}
+.content tbody a {
+    text-decoration: underline;
+
+}

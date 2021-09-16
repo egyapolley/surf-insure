@@ -1,0 +1,64 @@
+.formGroup {
+    display: flex;
+    margin-top: 30px;
+    padding: 30px;
+    justify-content: space-around;
+    align-items: baseline;
+    flex-wrap: wrap;
+    background: #C1E6FF;
+}
+
+.formGroup input {
+    border: 2px solid #4f4d4d;;
+    padding: 10px 20px;
+    outline: none;
+    text-align: center;
+}
+
+.formGroup input:focus {
+    background: #abbfbf;
+}
+
+
+.dateGroup {
+    display: flex;
+
+}
+.dateGroup label{
+    display: block;
+    margin-bottom: 2px;
+
+}
+
+.formGroup select {
+    display: block;
+    padding: 10px 30px;
+    border: 2px solid #4f4d4d;;
+    outline: none;
+    text-align: center;
+}
+
+.date {
+    margin: 0 30px;
+}
+.formGroup + div {
+    text-align: left;
+    margin-top: 5px;
+    padding-left: 10%;
+}
+.searchBtn {
+    display: inline-block;
+    padding: 5px 40px;
+    color: #0245A3;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: inherit;
+    transition: 0.4s;
+}
+.searchBtn:hover{
+    color: #6493b3;
+}
+
+.searchBtn i {
+    margin-right: 4px;
+}
