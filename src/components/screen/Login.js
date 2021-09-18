@@ -35,7 +35,7 @@ class Login extends Component {
            // const body = {...this.state.data}
             // const {data: jwt} = await httpService.post(loginURL, body);
             localStorage.setItem("token", "test");
-            window.location = "/"
+            window.location = "/surf-insure"
 
         } catch (ex) {
             const error = {};
