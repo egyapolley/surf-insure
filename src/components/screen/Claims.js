@@ -5,69 +5,111 @@ import mifiHuawei from '../../assets/huawei_mifi.png'
 import routerHuawei from '../../assets/huawei_router.png'
 import odu from '../../assets/odu.png'
 import {getData} from "../../data";
+import httpService from "../../services/httpService";
+import {values} from "lodash";
+import ProgressBar from "../UI/ProgressBar";
 
 
 function Claims(props) {
 
-    const {deviceTypes} =props
+    let {searchOptions} = props
 
-    const today =new Date()
-    const lastMonth =new Date().setMonth(today.getMonth()-2)
+    searchOptions = searchOptions.filter(item  =>item.value === 'policyId'||item.value ==='deviceImei')
 
-    const [startDate, setStartDate] =useState(today)
-    const [endDate, setEndDate] =useState(lastMonth)
+
     const [data, setData] = useState(null)
-    const [selectedDev, onSelectDev] =useState("")
+    const [searchparam, setSearchparam] = useState(searchOptions[0].value)
 
-    const [claimId, setClaimId] =useState("")
+    const [searchValue, setSearchValue] = useState("")
 
-    const {id:policyId} =props.match.params
+    const [showProgress, setProgress] = useState(false)
+
+    const {id: policyId} = props.match.params
 
 
-
-    const getImageSrc=(deviceType) =>{
+    const getImageSrc = (deviceType) => {
         if (deviceType.toLowerCase().includes("mi-fi")) return mifiHuawei
         if (deviceType.toLowerCase().includes("router")) return routerHuawei
         if (deviceType.toLowerCase().includes("odu")) return odu
-        return  mifiHuawei
+        return mifiHuawei
     }
 
-    const handleClickSearch=()=>{
-        if (!claimId) return
-        const data=getData().find(item=>item.policyId===claimId)
-        setData(data)
+    const fetchPolicy = async (searchparam, value) => {
+        try {
+            setProgress(true)
+            const {data} = await httpService.get("/policy", {
+                params: {searchparam, value}
+            })
 
-    }
+            if (data.status === 0) {
+                setData(data.data)
+            }
+        } catch (ex) {
+        } finally {
+            setProgress(false)
 
-    useEffect(()=>{
-        if (policyId){
-            const data =getData().find(item =>item.policyId === policyId)
-            setData(data)
         }
-    },[policyId])
+
+
+    }
+
+    const handleClickSearch = async () => {
+        console.log(searchparam,searchValue)
+
+        if (!searchValue) return
+
+        await fetchPolicy(searchparam,searchValue)
+
+    }
+
+    const handleSubmitClaim = async () => {
+        const policyId = data.policyId
+        try {
+            setProgress(true)
+            const {data: result} = await httpService.post("/policy_claim", {policyId})
+            if (result.status === 0) {
+                setData(result.data)
+
+            }
+        } catch (ex) {
+            console.log(ex)
+        } finally {
+            setProgress(false)
+        }
+
+
+    }
+
+
+    useEffect(() => {
+        if (policyId) {
+            fetchPolicy('policyId',policyId)
+        }
+    }, [policyId])
 
 
     return (
         <div>
             <FormGroup
-                setStartDate={setStartDate}
-                startDate={startDate}
-                selectOptions={deviceTypes}
-                selectedDev={selectedDev}
-                onSelectChange={onSelectDev}
-                endDate={endDate}
-                claimId={claimId}
+                selectOptions={searchOptions}
+                selectedDev={searchparam}
+                onSelectChange={setSearchparam}
+                claimId={searchValue}
                 onClickSearch={handleClickSearch}
-                setClaimId={setClaimId}
-                setEndDate={setEndDate}/>
-            {data &&  <div className={classes.container}>
+                setClaimId={setSearchValue}/>
+            <ProgressBar showProgress={showProgress}/>
+            {data && <div className={classes.container}>
                 <div className={classes.content}>
                     <div className={classes.imgContainer}>
                         <img src={getImageSrc(data.deviceType)} alt=""/>
                     </div>
                     <div className={classes.middle}>
                         <span>{data.deviceType}</span>
-                        <span><span style={{marginRight: "2px", color: "darkgreen", fontWeight: "bold"}}>{data.status}</span>|Expires: {data.dateExpired}</span>
+                        <span><span style={{
+                            marginRight: "2px",
+                            color: "darkgreen",
+                            fontWeight: "bold"
+                        }}>{data.status}</span>|Expires: {data.dateExpired}</span>
                     </div>
                     <div>
                         <div className={classes.spanGroup}>
@@ -78,18 +120,22 @@ function Claims(props) {
                             <span>Date issued:</span>
                             <span>{data.dateIssued}</span>
                         </div>
-                        <div className={classes.spanGroup}>
-                            <span>Plan length:</span>
-                            <span>{data.planLength}Yr</span>
-                        </div>
+                        {data.dateClaimed &&    <div className={classes.spanGroup}>
+                            <span>Date Claimed:</span>
+                            <span>{data.dateClaimed}</span>
+                        </div>}
                         <div className={classes.spanGroup}>
                             <span>Plan:</span>
-                            <span>GH&#8373; {data.plan}</span>
+                            <span>{data.planId}Yr</span>
+                        </div>
+                        <div className={classes.spanGroup}>
+                            <span>Plan Cost:</span>
+                            <span>GH&#8373; {data.cost}</span>
                         </div>
                     </div>
                 </div>
                 <div>
-                    {data.status ==="Active" && <button>Submit Claim</button> }
+                    {data.status === "Active" && <button onClick={handleSubmitClaim}>Submit Claim</button>}
 
                 </div>
             </div>}

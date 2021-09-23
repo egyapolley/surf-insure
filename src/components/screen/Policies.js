@@ -6,6 +6,9 @@ import classes from './Policies.module.css'
 import _ from 'lodash'
 
 import Pagination from "../UI/Pagination";
+import httpService from "../../services/httpService";
+import Refresh from "../UI/Refresh";
+import ProgressBar from "../UI/ProgressBar";
 
 const pageLength = 20
 
@@ -17,17 +20,16 @@ const paginate = (data, pageNumber, pageLength) => {
 
 function Policies(props) {
 
-    const {deviceTypes} = props
+    const {searchOptions} = props
 
-    const today = new Date()
-    const lastMonth = new Date().setMonth(today.getMonth() - 2)
 
-    const [startDate, setStartDate] = useState(today)
-    const [endDate, setEndDate] = useState(lastMonth)
-    const [selectedDev, onSelectDev] = useState("")
+
     const [data, setData] = useState([])
 
-    const [claimId, setClaimId] =useState("")
+    const [searchparam, setSearchparam] = useState(searchOptions[0].value)
+    const [searchValue, setSearchValue] = useState("")
+
+
 
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -36,19 +38,65 @@ function Policies(props) {
         orderBy: "asc"
     })
 
+    const [showProgress, setProgress] = useState(false)
+
+
     const totalCount = data.length
 
-    const handleClickSearch=()=>{
+    const handleClickSearch=async ()=>{
 
-        if (!claimId) return
-        const data=getData().filter(item=>item.policyId===claimId)
-        setData(data)
+        console.log(searchValue,searchparam)
+        if (!searchValue) return
+        const {data} = await httpService.get("/policy", {
+            params:{
+                searchparam,
+                value:searchValue
+            }
+        })
+        if (data.status ===0){
+            const{data:result} =data
+            if (Array.isArray(result)){
+                setData(result)
+            }else {
+                setData([result])
+            }
+        }
+
+
+
     }
 
 
+    const fetchPolicies = async () =>{
+        setProgress(true)
+        try {
+            const {data} = await httpService.get("/policies")
+            if (data.status === 0) {
+                let {data: result} = data
+                setData(result)
+            }
+        } catch (ex) {
+            console.log(ex)
+        } finally {
+            setProgress(false)
+        }
+
+    }
+
+
+
+
+
+
     useEffect(() => {
-        setData(getData)
+        fetchPolicies()
+
     }, [])
+
+
+    const onRefresh =async () =>{
+        await fetchPolicies()
+    }
 
 
 
@@ -59,19 +107,17 @@ function Policies(props) {
     return (
         <div>
             <FormGroup
-                setStartDate={setStartDate}
-                startDate={startDate}
-                endDate={endDate}
-                selectedDev={selectedDev}
-                onSelectChange={onSelectDev}
-                claimId={claimId}
+                selectedDev={searchparam}
+                onSelectChange={setSearchparam}
+                claimId={searchValue}
                 onClickSearch={handleClickSearch}
-                setClaimId={setClaimId}
-                selectOptions={deviceTypes}
-                setEndDate={setEndDate}/>
+                setClaimId={setSearchValue}
+                selectOptions={searchOptions}/>
+            <Refresh onClick={onRefresh}/>
+            <ProgressBar showProgress={showProgress}/>
             <CustomTable data={paginatedData} onSort={setSortColumn} sortColumn={sortColumn}/>
             <div className={classes.paginateContainer}>
-                {totalCount && <Pagination totalCount={totalCount} pageLength={pageLength} onClick={setCurrentPage}
+                {totalCount > 0 && <Pagination totalCount={totalCount} pageLength={pageLength} onClick={setCurrentPage}
                                            currentPage={currentPage}/>}
             </div>
 

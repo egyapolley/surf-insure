@@ -5,7 +5,7 @@ function Logout(props) {
 
     const handleLogOut = () => {
         localStorage.clear();
-        window.location = "/surf-insure"
+        window.location = "/"
     }
 
     return (

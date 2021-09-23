@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-right: 50px;
+    margin-top: 20px;
+
+}
+
+.container button {
+    transition: 0.4s;
+}
+
+.container button:hover {
+    transform: scale(1.2);
+
+}

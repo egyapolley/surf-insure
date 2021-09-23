@@ -269,7 +269,16 @@ const DEVICE_TYPES=[
     {value:"surflineOdu",label:"Surfline ODU"},
 ]
 
+const SEARCH_OPTIONS=[
+    {value:"policyId",label:"Policy ID"},
+    {value:"deviceImei",label:"Device IMEI"},
+    {value:"surflineNumber",label:"Surfline Number"},
+    {value:"contact",label:"Phone Contact"},
+
+]
+
 
 
 export const getData = () => DUMMY_DATA
 export const getDeviceTypes =()=> DEVICE_TYPES
+export const getSearchOptions =()=> SEARCH_OPTIONS

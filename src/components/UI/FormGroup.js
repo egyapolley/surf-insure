@@ -5,41 +5,38 @@ import classes from './FormGroup.module.css'
 
 
 
-function FormGroup({startDate, setStartDate,
-                       endDate, setEndDate,
-                       onClickSearch,
-                       selectOptions, onSelectChange,selectedDev,claimId,setClaimId}) {
+function FormGroup({onClickSearch, selectOptions, onSelectChange,selectedDev,claimId,setClaimId}) {
+
+    const getPlaceHolder = (value) => {
+        const selectOption =selectOptions.find(item => item.value ===value)
+        return selectOption.label
+
+    }
 
 
 
     return (
         <div>
             <div className={classes.formGroup}>
-                <div>
-                    <input type="text"
-                           placeholder="Search with claim ID"
-                           value={claimId}
-                           onChange={event => setClaimId(event.target.value)}/>
-                </div>
-                <div>
+                <div className={classes.searchGroup}>
+                    <label htmlFor="">Search with:</label>
                     <select value={selectedDev}  onChange={event =>onSelectChange(event.target.value) }>
-                        <option value="">Device Type</option>
                         {selectOptions.map(option =><option key={option.value} value={option.value}>{option.label}</option>)}
                     </select>
                 </div>
-                <div className={classes.dateGroup}>
-                    <div className={classes.date}>
-                        <CustomDatePicker label="Start Date" selected={startDate}
-                                          onChange={date => setStartDate(date)}/>
-                    </div>
-                    <div className={classes.date}>
-                        <CustomDatePicker label="End Date" selected={endDate} onChange={date => setEndDate(date)}/>
+                <div className={classes.group}>
+                    <input type="text"
+                           placeholder={`Enter ${selectedDev?getPlaceHolder(selectedDev):selectOptions[0].label}`}
+                           value={claimId}
+                           onChange={event => setClaimId(event.target.value)}/>
+
+                    <div>
+                        <button className={classes.searchBtn} onClick={onClickSearch}><i className="fas fa-arrow-alt-circle-right"/></button>
                     </div>
                 </div>
+
             </div>
-            <div>
-                <button className={classes.searchBtn} onClick={onClickSearch}><i className="fas fa-sign-in-alt"/>Search</button>
-            </div>
+
         </div>
     );
 }

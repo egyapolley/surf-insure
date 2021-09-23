@@ -63,7 +63,7 @@ function CustomTable({data,onSort,sortColumn}) {
                 <tr>
                     <th onClick={()=>handleSort("deviceType")}>Device Type {displaySortImage("deviceType")}</th>
                     <th onClick={()=>handleSort("policyId")}>Policy ID {displaySortImage("policyId")}</th>
-                    <th onClick={()=>handleSort("planLength")}>Plan Length(Yr) {displaySortImage("planLength")}</th>
+                    <th onClick={()=>handleSort("planId")}>Plan {displaySortImage("planLength")}</th>
                     <th onClick={()=>handleSort("dateIssued")}>Date Issued {displaySortImage("dateIssued")}</th>
                     <th onClick={()=>handleSort("dateExpired")}>Date Expired {displaySortImage("dateExpired")}</th>
                     <th onClick={()=>handleSort("status")}>Status {displaySortImage("status")}</th>
@@ -74,7 +74,7 @@ function CustomTable({data,onSort,sortColumn}) {
                     data.map(item => <tr key={item.id}>
                         <td>{item.deviceType}</td>
                         <td><Link to={`/claims/${item.policyId}`}>{item.policyId}</Link></td>
-                        <td>{item.planLength}</td>
+                        <td>{item.planId}</td>
                         <td>{item.dateIssued}</td>
                         <td>{item.dateExpired}</td>
                         <td style={{color:getClasses(item.status)}}>{item.status}</td>

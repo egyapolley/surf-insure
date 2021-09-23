@@ -10,8 +10,8 @@ import {useEffect, useState} from "react";
 import Login from "./components/screen/Login";
 import Logout from "./components/UI/Logout";
 import Settings from "./components/screen/Settings";
-import {getDeviceTypes} from "./data";
-
+import {getDeviceTypes, getSearchOptions} from "./data";
+import httpService from "./services/httpService";
 
 
 
@@ -20,13 +20,15 @@ function App() {
 
     const [isLogin, setIsLogin] = useState(false)
     const [deviceTypes, setDeviceTypes] = useState([])
+    const [searchOptions, setSearchOptions]=useState([])
 
 
     useEffect(() => {
         const jwt = localStorage.getItem("token");
         if (jwt) {
             setIsLogin(true)
-            setDeviceTypes(getDeviceTypes)
+            setDeviceTypes(getDeviceTypes())
+            setSearchOptions(getSearchOptions())
 
         }
 
@@ -39,13 +41,13 @@ function App() {
         <div className="content">
             <Switch>
                 <Route path="/dashboard"
-                       render={(props => <Dashboard name="Main Dashboard" {...props} deviceTypes={deviceTypes}/>)}/>
+                       render={(props => <Dashboard name="Main Dashboard"  {...props} deviceTypes={deviceTypes}/>)}/>
                 <Route path="/claims/:id"
-                       render={(props => <Claims name="Manage Claims" {...props} deviceTypes={deviceTypes}/>)}/>
+                       render={(props => <Claims name="Manage Claims"  {...props}  searchOptions={searchOptions}/>)}/>
                 <Route path="/claims"
-                       render={(props => <Claims name="Manage Claims" {...props} deviceTypes={deviceTypes}/>)}/>
+                       render={(props => <Claims name="Manage Claims"  {...props} searchOptions={searchOptions}/>)}/>
                 <Route path="/policies"
-                       render={(props => <Policies name="Manage Policies" {...props} deviceTypes={deviceTypes}/>)}/>
+                       render={(props => <Policies name="Manage Policies"  {...props} searchOptions={searchOptions}/>)}/>
                 <Route path="/reports" render={(props => <Reports name="Reports" {...props} />)}/>
                 <Route path="/settings" render={(props => <Settings name="Settings" {...props} />)}/>
                 <Redirect from="/" to="/dashboard"/>

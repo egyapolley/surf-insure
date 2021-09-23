@@ -5,9 +5,10 @@ import _ from 'lodash'
 function Pagination(props) {
     const {onClick,currentPage,totalCount,pageLength}=props
     const numOfPages=Math.ceil(totalCount/pageLength)
-    if (numOfPages===1) return null
+    if (numOfPages<=1) return null
 
     const pages = _.range(1,numOfPages+1)
+    console.log("pages", pages)
 
 
     return (

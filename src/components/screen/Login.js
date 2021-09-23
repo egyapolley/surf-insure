@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import "./Login.css"
-// import httpService from "../services/httpService";
-// import {loginURL} from '../config.json'
+import httpService from "../../services/httpService";
+
 
 class Login extends Component {
 
@@ -32,10 +32,10 @@ class Login extends Component {
 
     doSubmit = async () => {
         try {
-           // const body = {...this.state.data}
-            // const {data: jwt} = await httpService.post(loginURL, body);
-            localStorage.setItem("token", "test");
-            window.location = "/surf-insure"
+           const body = {...this.state.data}
+            const {data: jwt} = await httpService.post("/login", body);
+            localStorage.setItem("token", jwt);
+            window.location = "/"
 
         } catch (ex) {
             const error = {};
@@ -66,7 +66,7 @@ class Login extends Component {
                 <div className="login-main-container">
                     <div className="login-container">
                         <div className="form">
-                            {message && <small className="login-error"><i className="fas fa-exclamation-triangle"/>{message}</small>}
+                            {message && <small className="login-error"><i className="fas fa-exclamation-triangle"/> {message}</small>}
                             <form onSubmit={this.handleFormSubmit}>
                                 <div className="login-form-control textbox">
                                     <i className="fas fa-user"/>
